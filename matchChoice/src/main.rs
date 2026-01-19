@@ -18,6 +18,32 @@ fn main() {
         11 => println!("Eleven"),
         12 => println!("Twelve"),
         13 => println!("Thirteen"),
-        _ => println!("A number greater than thirteen"),
+        _ => println!("A number greater than thirteen (or less than one)"),
     }
+
+
+    // If multiple patterns should do the same thing, you can combine them with | (OR operator).
+    let another_number = 7;
+
+    match another_number {
+        1 | 3 | 5 | 7 | 9 | 11 | 13 => println!("Odd number"),
+        2 | 4 | 6 | 8 | 10 | 12 => println!("Even number"),
+        _ => println!("A number greater than thirteen (or less than one)"),
+    }
+
+    
+    // Match can also return a value.
+    let day = 4;
+
+    let result = match day {
+        1 => "Monday",
+        2 => "Tuesday",
+        3 => "Wednesday",
+        4 => "Thursday",
+        5 => "Friday",
+        6 => "Saturday",
+        7 => "Sunday",
+        _ => "Invalid day",
+    };
+    println!("The day is: {}", result);
 }

@@ -1,5 +1,6 @@
 # Rust-Learning
 My progress of learning Rust.
+Website used: https://www.w3schools.com/rust/
 
 At first you have to create a new Rust project using "cargo init" or "cargo new 'project_name' in the terminal.
 Then you can replace the contents of src/main.rs with the code you want.
