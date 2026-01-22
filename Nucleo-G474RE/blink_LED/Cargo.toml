@@ -1,0 +1,11 @@
+[package]
+name = "blink_LED"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cortex-m = "0.7"
+cortex-m-rt = "0.7"
+panic-halt = "1.0"
+
+stm32g4xx-hal = { version = "0.0.1", features = ["stm32g474", "rt"] }
