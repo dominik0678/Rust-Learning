@@ -31,17 +31,21 @@ fn main() -> !{
     let mut offboard_led = gpioa.pa4.into_push_pull_output();
 
     // Button is connected on a Breadboard to D2 (PA10)
-    let button = gpioa.pa10.into_pull_up_input();
+    let button0 = gpioa.pa10.into_pull_up_input();
+    let button1 = gpioa.pa9.into_pull_up_input();
 
     loop {
-        while button.is_low().unwrap() {
+        while button0.is_low().unwrap() {
             for _ in 0..10_000 {
                 _ = offboard_led.set_high();    
             }
             for _ in 0..10_000 {
                 _ = offboard_led.set_low();    
             }
-        }            
+        }         
+        while button1.is_low().unwrap() {
+            _ = offboard_led.set_high();
+        }   
         _ = offboard_led.set_low();
     }
 }

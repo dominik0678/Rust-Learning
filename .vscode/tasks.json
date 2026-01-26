@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "arm-none-eabi-gcc",
+      "args": [
+        "-mcpu=cortex-m4",
+        "-mthumb",
+        "-O0",
+        "-ffreestanding",
+        "-nostdlib",
+        "-nostartfiles",
+
+        "-x", "assembler-with-cpp",
+        "RustWithC/C_Stuff/startup_stm32g474.S",
+        "-x", "none",
+
+        "RustWithC/C_Stuff/main.c",
+        "RustWithC/C_Stuff/led.c",
+
+        "-Wl,-T,RustWithC/C_Stuff/stm32g474re.ld",
+        "-Wl,-Map,build/test.map",
+        "-o",
+        "build/test.elf"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "flash",
+      "type": "shell",
+      "command": "openocd",
+      "args": [
+        "-f",
+        "board/st_nucleo_g4.cfg",
+        "-c",
+        "program build/test.elf verify reset exit"
+      ],
+      "dependsOn": "build",
+      "problemMatcher": []
+    }
+  ]
+}
