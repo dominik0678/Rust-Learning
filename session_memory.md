@@ -5,7 +5,7 @@ It is stored in the repository so future sessions can resume quickly.
 
 ## Memory Meta
 - Created: 2026-02-16
-- Last updated: 2026-02-16 15:00
+- Last updated: 2026-02-17
 - Owner: Dominik
 - Workspace: `/home/dominik/Dokumente/Work/Rust-Learning`
 - Main goal: Reach IPA readiness and become independent from AI support.
@@ -14,7 +14,7 @@ It is stored in the repository so future sessions can resume quickly.
   - PA execution window: 06-04-2026 to 31-05-2026
   - Submission deadline: 09-03-2026
   - Earlier note in chat: "IPA from 07-05-2026" (keep as provisional until detailed plan confirms)
-- Baseline timing: 80 days remaining from 2026-02-16.
+- Baseline timing: 79 days remaining from 2026-02-17 (derived from initial 80-day baseline).
 
 ## Tooling and Constraints
 - IDE: VSCode
@@ -91,6 +91,9 @@ It is stored in the repository so future sessions can resume quickly.
 - `w3schools/hashMap/src/main.rs`
 - `Todo-App/todo-app/src/main.rs`
 - `Nucleo-G474RE/blink_LED/src/main.rs`
+- `learning_with_opencode/challenge_2/src/main.rs`
+- `learning_with_opencode/challenge_3/src/main.rs`
+- `learning_with_opencode/challenge_4/src/main.rs`
 
 ## IPA Preparation Roadmap (80-day structure)
 
@@ -139,16 +142,75 @@ It is stored in the repository so future sessions can resume quickly.
 - Session close note: user ended for the day around 15:00.
 - Status: Challenge 1 completed. Track remains active, next step is Challenge 2.
 
+### Session 002
+- Date: 2026-02-17
+- Session open action: assistant re-read `session_memory.md` on request before continuing.
+- User requested conceptual review of completed Challenge 1 before moving on.
+- Concept clarification delivered:
+  - `return` keyword is allowed in Rust, but optional for final expression.
+  - Tail expression behavior explained (`s` returns value, `s;` does not).
+  - Distinction between functions returning concrete values (`usize`, `String`) and functions returning unit `()`.
+- Challenge 2 resumed and user provided a compiling attempt with wrong behavior.
+- Observed blockers in user code:
+  - Used `tasks.len()` (vector length) instead of summing per-string length.
+  - Used `clone()` inside ownership exercise (`consume_last`) and discarded popped value.
+  - Returned placeholder tuple instead of `(remaining_tasks, removed_task)`.
+- Coaching action:
+  - Explained semantic difference between vector length and string length.
+  - Provided fix pattern for ownership-safe `pop()` without cloning.
+  - Adapted explanation to beginner syntax level after user noted `iter()/map()` had not yet been learned.
+- User feedback signal captured: "iterator syntax felt like a trap" because it was unknown at this stage.
+- Teaching adjustment applied immediately:
+  - Loop-first style preferred (`for`, mutable accumulator) before iterator chains.
+  - Goal reaffirmed: syntax confidence before abstraction-heavy patterns.
+- Additional drill progression:
+  - Challenge 3 completed by user.
+  - Correct parts: total-length loop and ownership-based pop tuple.
+  - Needed correction: second task was hardcoded (`"code [done]"`) instead of appending to existing value.
+- Challenge 4 completed cleanly by user and validated with `cargo run`.
+- Concept deepening completed: `push` (single `char`) vs `push_str` (`&str`) with practical examples.
+- Challenge 5 was prepared and assigned (safe second-element mutation via `get_mut(1)`) but not started.
+- User announced immediate context switch: start integrating C into Rust now (higher urgency).
+- Session close status:
+  - Ownership/Borrowing fundamentals improved through consecutive successful drills.
+  - Transition from pure syntax drills to Rust/C integration begins next session.
+
 ## Active Learning Track
-- Selected: Ownership/Borrowing Challenge Path
-- Start state: Challenge 1 completed; Challenge 2 pending for next session
+- Primary (new): Rust/C Integration Kickoff Path (FFI-focused)
+- Secondary (continuing): Ownership/Borrowing reinforcement when needed
+- Ownership drill status:
+  - Challenge 1: completed
+  - Challenge 2: completed
+  - Challenge 3: completed (one correction discussed)
+  - Challenge 4: completed
+  - Challenge 5: assigned, paused due context switch
+
+## Immediate FFI Transition Plan (next session priority)
+1. Build minimal Rust-to-C call path in an isolated mini-project:
+   - C side: one tiny function (for example integer add/subtract)
+   - Rust side: `extern "C"` declaration and call site
+2. Add and explain build/link flow:
+   - `build.rs`
+   - `cc` crate compile step for C source
+   - successful Cargo linkage and run
+3. Define clear safety boundary:
+   - keep `unsafe` limited to smallest possible wrapper
+   - provide a safe Rust function that calls the unsafe FFI boundary internally
+4. Add verification step:
+   - simple runtime check in `main`
+   - optional unit test for wrapper behavior
+5. Capture invariants in notes:
+   - ownership expectations
+   - pointer validity assumptions
+   - ABI assumptions (`extern "C"`)
 
 ## Next Session Start Checklist
 1. Read `session_memory.md` first.
 2. Confirm current day and update `Last updated` field.
 3. Resume from "Current Session State" and "Active Learning Track".
-4. Continue ownership/borrowing challenge sequence.
-5. End session by updating log, wins, blockers, and next task.
+4. Start FFI Kickoff Task 1: minimal Rust call into one C function.
+5. Keep solution beginner-readable first; only introduce advanced patterns after base version works.
+6. End session by updating log, wins, blockers, and next concrete FFI task.
 
 ## Session Update Protocol (must be done each session)
 At the end of each session, append:
@@ -177,6 +239,35 @@ Also update:
 - Confidence (1-10): Not self-rated yet
 - Homework/next action: Start Challenge 2 next session (ownership-focused, slightly harder)
 
+### Session 002
+- Date: 2026-02-17
+- Focus: Consolidate ownership/borrowing understanding and close syntax gaps before FFI transition
+- Tasks:
+  - Revisit Challenge 1 concepts (`return` vs tail expression)
+  - Complete Challenge 2 (`total_len`, mutable append, consume/pop ownership flow)
+  - Complete Challenge 3 beginner drill
+  - Complete Challenge 4 (`push` vs `push_str` practical use)
+  - Prepare Challenge 5 but pause due context switch
+- Independent wins:
+  - User recognized conceptual confusion early and asked targeted questions
+  - User completed Challenge 2 after clarifying ownership and length semantics
+  - User completed Challenge 3 and Challenge 4 with strong ownership handling
+  - User validated outputs and kept iterative debugging workflow
+- Needed hints for:
+  - Difference between vector length and string length
+  - Why cloning in ownership drills is usually the wrong move
+  - How to return popped value correctly from an owned `Vec<String>`
+  - Idiomatic but optional syntax (`iter()/map()/sum()`) vs loop-first alternatives
+- Key mistakes/patterns:
+  - Hardcoded mutation target value instead of mutating existing data in place
+  - Confusion when exposed to syntax not yet learned (`iter`, `map`)
+  - Temporary assumption that `return` keyword is mandatory in all non-unit functions
+- Confidence (1-10): Not self-rated in chat
+- Homework/next action:
+  - Begin Rust/C integration mini-project immediately
+  - First objective: compile and call one C function from Rust via `extern "C"`
+  - Keep `unsafe` surface minimal and document assumptions in comments/notes
+
 ## Session Log Template (copy for future entries)
 ### Session XXX
 - Date:
@@ -201,6 +292,8 @@ Also update:
   - Mitigation: Isolate FFI layer, document invariants, and keep unsafe blocks minimal and reviewed.
 - Risk: Toolchain friction late in project.
   - Mitigation: Build reproducible setup early and rehearse clean-machine setup steps.
+- Risk: Context-switch overload during transition from syntax drills to FFI.
+  - Mitigation: Use one-concept-at-a-time exercises (call C function first, pointers second, buffers third).
 
 ## Notes for Future Assistant Runs
 - Always read this file before coaching.
