@@ -17,6 +17,15 @@ build/
 *.dll
 *.dylib
 *.exe
+*.out
+a.out
+
+# Local binaries produced during manual experiments
+RustWithC/C_Stuff/main
+w3schools/**/src/main
+
+# Local runtime data
+**/todos.csv
 
 # Editor/IDE
 .vscode/

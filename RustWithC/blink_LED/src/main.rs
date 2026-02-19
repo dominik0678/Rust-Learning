@@ -5,18 +5,18 @@
 
 // If you want to start a new project, just copy this whole template.
 
-
+// Nucleo stuff
 #![deny(unsafe_code)]
 #![deny(warnings)]
 #![no_main]
 #![no_std]
 
 use panic_halt as _;
-
 use stm32g4xx_hal as hal;
-
 use crate::hal::prelude::*;
 use cortex_m_rt::entry;
+// Nucleo stuff
+
 
 #[entry]
 fn main() -> !{

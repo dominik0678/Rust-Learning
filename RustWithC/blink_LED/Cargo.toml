@@ -8,4 +8,7 @@ cortex-m = "0.7"
 cortex-m-rt = "0.7"
 panic-halt = "1.0"
 
-stm32g4xx-hal = { version = "0.0.1", features = ["stm32g474", "rt"] }
+stm32g4xx-hal = { version = "0.1.0", features = ["stm32g474", "rt"] }
+
+[build-dependencies]
+bindgen = "0.72.1"
