@@ -8,6 +8,7 @@ unsafe extern "C" {
     fn LED_Init();
     fn LED_On();
     fn LED_Off();
+    fn LED_SOS();
     fn BTN_Init();
     fn BTN_Read() -> u8;
 }
@@ -20,12 +21,14 @@ fn main() -> ! {
     }
 
     loop {
-        let state = unsafe { BTN_Read() }; // 0 or 1
-        if state != 0 {
-            unsafe { LED_On(); }
-        } else {
-            unsafe { LED_Off(); }
-        }
+        // let state = unsafe { !BTN_Read() }; // 0 or 1
+        // if state != 0 {
+        //     unsafe { LED_On(); }
+        // } else {
+        //     unsafe { LED_Off(); }
+        // }
+
+        unsafe { LED_SOS(); }
     }
 }
 

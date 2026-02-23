@@ -41,3 +41,6 @@ w3schools/**/src/main
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# opencode.exe
+opencode.exe

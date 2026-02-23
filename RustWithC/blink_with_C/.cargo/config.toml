@@ -3,7 +3,12 @@ target = "thumbv7em-none-eabihf"
 
 [target.thumbv7em-none-eabihf]
 runner = "probe-rs run --chip STM32G474RETx"
+linker = "rust-lld"
 rustflags = [
   "-C",
   "link-arg=-Tlink.x",
 ]
+
+[env]
+CC_thumbv7em_none_eabihf = "arm-none-eabi-gcc"
+AR_thumbv7em_none_eabihf = "arm-none-eabi-ar"
