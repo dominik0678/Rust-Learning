@@ -5,7 +5,7 @@ It is stored in the repository so future sessions can resume quickly.
 
 ## Memory Meta
 - Created: 2026-02-16
-- Last updated: 2026-02-17
+- Last updated: 2026-03-02
 - Owner: Dominik
 - Workspace: `/home/dominik/Dokumente/Work/Rust-Learning`
 - Main goal: Reach IPA readiness and become independent from AI support.
@@ -175,9 +175,28 @@ It is stored in the repository so future sessions can resume quickly.
   - Ownership/Borrowing fundamentals improved through consecutive successful drills.
   - Transition from pure syntax drills to Rust/C integration begins next session.
 
+### Session 003
+- Date: 2026-03-02
+- Session open action: assistant re-read and analyzed `session_memory.md` on request.
+- User direction change: did not want to continue in the previous session style; requested an understandable C library for Rust integration practice.
+- Implementation work completed:
+  - Created `RustWithC/ffi_c_library/` as a fully working Rust/C FFI reference project.
+  - User feedback captured: full solution felt too "silver plate" for learning goals.
+  - Created `RustWithC/ffi_learning_starter/` as a practice-first starter.
+  - Kept Rust learning tasks open in `src/student_ffi.rs` with TODO wrappers (`sum_i16`, `offset_i16`, `max_i16`).
+  - Completed C-side expectation for IPA-like setup by adding standalone C app files:
+    - `RustWithC/ffi_learning_starter/c_lib/main.c`
+    - `RustWithC/ffi_learning_starter/c_lib/Makefile`
+- Verification completed:
+  - `make -C c_lib run` works (standalone C library + C main demo).
+  - `cargo test` and `cargo run` work in `RustWithC/ffi_learning_starter`.
+- Session close status:
+  - C library side is complete and independently runnable.
+  - Next learning focus is Rust wrapper implementation by the user.
+
 ## Active Learning Track
-- Primary (new): Rust/C Integration Kickoff Path (FFI-focused)
-- Secondary (continuing): Ownership/Borrowing reinforcement when needed
+- Primary: Rust/C FFI integration with learner-owned Rust wrapper implementation
+- Secondary: Ownership/Borrowing reinforcement when needed
 - Ownership drill status:
   - Challenge 1: completed
   - Challenge 2: completed
@@ -185,32 +204,28 @@ It is stored in the repository so future sessions can resume quickly.
   - Challenge 4: completed
   - Challenge 5: assigned, paused due context switch
 
-## Immediate FFI Transition Plan (next session priority)
-1. Build minimal Rust-to-C call path in an isolated mini-project:
-   - C side: one tiny function (for example integer add/subtract)
-   - Rust side: `extern "C"` declaration and call site
-2. Add and explain build/link flow:
-   - `build.rs`
-   - `cc` crate compile step for C source
-   - successful Cargo linkage and run
-3. Define clear safety boundary:
-   - keep `unsafe` limited to smallest possible wrapper
-   - provide a safe Rust function that calls the unsafe FFI boundary internally
-4. Add verification step:
-   - simple runtime check in `main`
-   - optional unit test for wrapper behavior
-5. Capture invariants in notes:
-   - ownership expectations
-   - pointer validity assumptions
-   - ABI assumptions (`extern "C"`)
+- FFI project status:
+  - Reference project (fully solved): `RustWithC/ffi_c_library`
+  - Practice project (current focus): `RustWithC/ffi_learning_starter`
+  - C library state in practice project: complete (`simple_signal.c/.h` + `main.c` + `Makefile`)
+  - Rust wrapper state in practice project: intentionally partial (student TODOs in `src/student_ffi.rs`)
+
+## Immediate FFI Practice Plan (next session priority)
+1. Implement `sum_i16` wrapper in `RustWithC/ffi_learning_starter/src/student_ffi.rs`.
+2. Implement `offset_i16` wrapper in `RustWithC/ffi_learning_starter/src/student_ffi.rs`.
+3. Implement `max_i16` wrapper in `RustWithC/ffi_learning_starter/src/student_ffi.rs`.
+4. Add unit tests for wrapper success and at least one error path.
+5. Update `RustWithC/ffi_learning_starter/src/main.rs` to call all implemented wrappers.
+6. Keep `unsafe` only inside wrapper functions and map C status codes to Rust errors.
 
 ## Next Session Start Checklist
 1. Read `session_memory.md` first.
 2. Confirm current day and update `Last updated` field.
 3. Resume from "Current Session State" and "Active Learning Track".
-4. Start FFI Kickoff Task 1: minimal Rust call into one C function.
+4. Open `RustWithC/ffi_learning_starter/src/student_ffi.rs` and start with `sum_i16` TODO.
 5. Keep solution beginner-readable first; only introduce advanced patterns after base version works.
-6. End session by updating log, wins, blockers, and next concrete FFI task.
+6. Validate with `cargo test` after each wrapper implementation.
+7. End session by updating log, wins, blockers, and next concrete FFI task.
 
 ## Session Update Protocol (must be done each session)
 At the end of each session, append:
@@ -267,6 +282,29 @@ Also update:
   - Begin Rust/C integration mini-project immediately
   - First objective: compile and call one C function from Rust via `extern "C"`
   - Keep `unsafe` surface minimal and document assumptions in comments/notes
+
+### Session 003
+- Date: 2026-03-02
+- Focus: Start FFI work with a complete C-side baseline and a learner-owned Rust wrapper path
+- Tasks:
+  - Re-read session memory and align on changed learning preference
+  - Create full reference project: `RustWithC/ffi_c_library`
+  - Create practice project: `RustWithC/ffi_learning_starter`
+  - Complete standalone C library + C main in practice project
+  - Verify C-only and Cargo-based runs
+- Independent wins:
+  - User gave clear feedback to preserve learning ownership
+  - User clarified IPA expectation that C library should be fully complete and runnable on its own
+- Needed hints for:
+  - No code-level hint cycle yet in this session (focus was environment/scaffold setup)
+- Key mistakes/patterns:
+  - Initial assistant approach oversolved Rust side relative to user learning preference
+  - Quickly corrected by splitting into reference project + practice-first project
+- Confidence (1-10): Not self-rated in chat
+- Homework/next action:
+  - Implement `sum_i16`, `offset_i16`, and `max_i16` wrappers in `RustWithC/ffi_learning_starter/src/student_ffi.rs`
+  - Add tests for wrappers and run `cargo test`
+  - Expand `src/main.rs` demo after wrappers compile and pass tests
 
 ## Session Log Template (copy for future entries)
 ### Session XXX

@@ -2,9 +2,9 @@ use rand::seq::IndexedRandom;
 
 fn main() {
     let new_password;
-    let lenght = 50;
+    let length = 50;
 
-    new_password = password_gen(lenght);
+    new_password = password_gen(length);
     println!("{}", new_password);
 
 }
