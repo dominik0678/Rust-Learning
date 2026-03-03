@@ -4,3 +4,5 @@
 - gcc -c -o src/simple_math.o src/simple_math.c (where the first one is the new file and the other the aimed file [where it should generate from])
 - ar rcs lib/simple_math.a src/simple_math.o (again just like the first command)
 - cargo run (should work [I hope so])
+
+Also the build.rs is important so it knows to compile the C code.
