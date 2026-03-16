@@ -44,3 +44,6 @@ Thumbs.db
 
 # opencode.exe
 opencode.exe
+
+# other
+*.webm
